@@ -23,10 +23,11 @@
 
 <script>
     function resetGame() {
-    if(confirm("Are you sure you want to wipe all scores?")) {
-        db.ref('players').remove();
+        if(confirm("Are you sure you want to wipe all scores?")) {
+            db.ref('players').remove();
+        }
     }
-}
+
     const firebaseConfig = {
   apiKey: "AIzaSyAAFeZuc_OGv-ECp-Ur6VsVh_HI51JcsYA",
   authDomain: "idiom-hunt.firebaseapp.com",
@@ -36,11 +37,11 @@
   messagingSenderId: "511512820618",
   appId: "1:511512820618:web:e3e8fe5b90dd9ba126a673",
   measurementId: "G-D75LVWF81M"
-    };
+};
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Generate QR code pointing to your player file (host this on GitHub Pages)
+    // Generate QR code pointing to your index.html file
     new QRCode(document.getElementById("qr"), "https://TheOneWhoRoams.github.io/Idiom-Scavenger-Hunt-Educational-Web-App-for-ESL-/");
 
     // Listen for score updates
