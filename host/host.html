@@ -9,6 +9,7 @@
 </head>
 <body>
     <h1>Idiom Scavenger Hunt</h1>
+    <button onclick="resetGame()" style="margin-top: 20px; padding: 10px 20px; background: #dc2626; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">Wipe Leaderboard</button>
     <div style="display: flex; gap: 50px;">
         <div>
             <h3>Scan to Join:</h3>
@@ -21,7 +22,11 @@
     </div>
 
 <script>
-    
+    function resetGame() {
+    if(confirm("Are you sure you want to wipe all scores?")) {
+        db.ref('players').remove();
+    }
+}
     const firebaseConfig = {
   apiKey: "AIzaSyAAFeZuc_OGv-ECp-Ur6VsVh_HI51JcsYA",
   authDomain: "idiom-hunt.firebaseapp.com",
@@ -36,7 +41,7 @@
     const db = firebase.database();
 
     // Generate QR code pointing to your player file (host this on GitHub Pages)
-    new QRCode(document.getElementById("qr"), "https://YOUR_GITHUB_PAGES_URL/player.html");
+    new QRCode(document.getElementById("qr"), "https://TheOneWhoRoams.github.io/Idiom-Scavenger-Hunt-Educational-Web-App-for-ESL-/");
 
     // Listen for score updates
     db.ref('players').on('value', (snapshot) => {
