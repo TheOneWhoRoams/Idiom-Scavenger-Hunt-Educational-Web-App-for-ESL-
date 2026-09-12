@@ -22,19 +22,16 @@
     </div>
 
 <script>
-  {
-    const firebaseConfig = {   apiKey: "AIzaSyAAFeZuc_OGv-ECp-Ur6VsVh_HI51JcsYA",
-  authDomain: "idiom-hunt.firebaseapp.com",
-  databaseURL: "https://idiom-hunt-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "idiom-hunt",
-  storageBucket: "idiom-hunt.firebasestorage.app",
-  messagingSenderId: "511512820618",
-  appId: "1:511512820618:web:e3e8fe5b90dd9ba126a673",
-  measurementId: "G-D75LVWF81M" };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-  }
-    ;
+    const firebaseConfig = {
+        apiKey: "PASTE_YOUR_EXACT_API_KEY_HERE",
+        authDomain: "idiom-hunt.firebaseapp.com",
+        databaseURL: "https://idiom-hunt-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "idiom-hunt",
+        storageBucket: "idiom-hunt.firebasestorage.app",
+        messagingSenderId: "511512820618",
+        appId: "1:511512820618:web:e3e8fa5b98dd9ba126a673",
+        measurementId: "G-D7SLVWF81M"
+    };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
@@ -52,7 +49,7 @@
     let myScore = 0;
     let myCurrentPhrase = "";
     let html5QrcodeScanner;
-    let isProcessing = false; // The execution lock
+    let isProcessing = false; // Prevents double scanning
 
     function startGame() {
         myName = document.getElementById('playerName').value;
@@ -61,6 +58,7 @@
         document.getElementById('login').style.display = 'none';
         document.getElementById('game').style.display = 'block';
         
+        // Register player in DB
         db.ref('players/' + myName).set({ name: myName, score: 0 });
         
         assignNewPhrase();
@@ -71,7 +69,7 @@
         const phrases = Object.keys(pairs);
         let newPhrase = myCurrentPhrase;
         
-        // Force the script to pick a different phrase
+        // Force the script to pick a different phrase so they don't get the same one twice
         while (newPhrase === myCurrentPhrase) {
             newPhrase = phrases[Math.floor(Math.random() * phrases.length)];
         }
@@ -89,7 +87,7 @@
         // If we are already processing a scan, ignore any new frames
         if (isProcessing) return;
         
-        isProcessing = true; // Lock the execution
+        isProcessing = true; // Lock execution
         html5QrcodeScanner.pause();
 
         const correctTarget = pairs[myCurrentPhrase];
@@ -115,9 +113,8 @@
                 isProcessing = false; // Unlock execution
                 html5QrcodeScanner.resume();
             }, 2000);
-           }
+        }
     }
-
 </script>
 </body>
 </html>
